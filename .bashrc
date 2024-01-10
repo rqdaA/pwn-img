@@ -137,6 +137,8 @@ ex() {
 }
 
 export PATH="$PATH:/home/user/.local/bin"
+export PATH="$PATH:/home/user/.foundry/bin"
+export PATH="$PATH:/home/user/lysithea"
 export LC_CTYPE=C.UTF-8
 alias ll="ls -lah --group-directories-first"
 alias r2="r2 -AA"
