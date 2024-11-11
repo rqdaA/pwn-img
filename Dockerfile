@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
-RUN apt update && apt upgrade -y 
-RUN apt install -y git neovim python3 python3-pip python3-venv sudo curl wget unzip tmux make gcc qemu-system-x86-64
+RUN apt update && apt upgrade -y
+RUN apt install -y git neovim python3 python3-pip python3-venv sudo curl wget unzip tmux make gcc netcat qemu-user qemu-system
 RUN id ubuntu && userdel ubuntu || true
 RUN groupadd user -g 1001 && useradd -m user -s /bin/bash -u 1000 -g 1001 -G sudo
 RUN echo user:pwn | chpasswd
@@ -11,24 +11,23 @@ USER user
 WORKDIR /home/user
 
 RUN python3 -m venv .venv
-RUN git config --global user.email "info@rqda.wtf" && git config --global user.name "rona"
-RUN git clone https://github.com/radareorg/radare2.git
-RUN git clone https://github.com/pwndbg/pwndbg
-RUN git clone https://github.com/rqdaA/lysithea.git
-RUN git clone https://github.com/matrix1001/glibc-all-in-one.git
+RUN git config --global user.email "info@rqda.wtf" && git config --global user.name "rona" && \
+    git clone https://github.com/radareorg/radare2.git && \
+    git clone https://github.com/pwndbg/pwndbg && \
+    git clone https://github.com/rqdaA/lysithea.git
 RUN radare2/sys/install.sh
 RUN cd lysithea/ && ./install.sh
 RUN .venv/bin/pip install pwntools && .venv/bin/pip install ptrlib
-RUN bash -c "$(wget https://gef.blah.cat/sh -O -)"
 RUN cd pwndbg/ && ./setup.sh
-RUN r2pm -U && r2pm -ci r2ghidra
-RUN curl -L https://foundry.paradigm.xyz | bash && /home/user/.foundry/bin/foundryup
+# RUN r2pm -U && r2pm -ci r2ghidra
+# RUN curl -L https://foundry.paradigm.xyz | bash && /home/user/.foundry/bin/foundryup
 
 USER root
 RUN wget -q https://raw.githubusercontent.com/bata24/gef/dev/install.sh -O- | sh
 COPY --chown=user .bashrc .
 COPY --chown=user .gdbinit .
 COPY --chown=user .tmux.conf .
+COPY --chown=user init.vim /home/user/.config/nvim/
 
 USER user
 

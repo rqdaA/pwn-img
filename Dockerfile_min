@@ -1,7 +1,7 @@
-FROM ubuntu:22.04@sha256:b4b521bfcec90b11d2869e00fe1f2380c21cbfcd799ee35df8bd7ac09e6f63ea
+FROM arm64v8/ubuntu:22.04
 RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
-RUN apt update && apt upgrade -y && apt install -y git python3 python3-pip python3-venv sudo curl wget unzip tmux make gcc
-# RUN id ubuntu && userdel ubuntu || true
+RUN apt update && apt upgrade -y && apt install -y git python3 python3-pip python3-venv sudo curl wget unzip tmux make gcc neovim
+RUN id ubuntu && userdel ubuntu || true
 RUN groupadd user -g 1001 && useradd -m user -s /bin/bash -u 1000 -g 1001 -G sudo
 RUN echo user:pwn | chpasswd
 RUN echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
@@ -13,11 +13,13 @@ RUN python3 -m venv .venv
 RUN git config --global user.email "info@rqda.wtf" && git config --global user.name "rona"
 # RUN git clone https://github.com/radareorg/radare2.git
 RUN git clone https://github.com/pwndbg/pwndbg
-# RUN git clone https://github.com/rqdaA/lysithea.git
+RUN git clone https://github.com/longld/peda.git
+RUN git clone https://github.com/scwuaptx/Pwngdb.git
+RUN git clone https://github.com/rqdaA/lysithea.git
 # RUN git clone https://github.com/matrix1001/glibc-all-in-one.git
 # RUN radare2/sys/install.sh
-# RUN cd lysithea/ && ./install.sh
-# RUN .venv/bin/pip install --upgrade pip && .venv/bin/pip install pwntools
+RUN cd lysithea/ && ./install.sh
+RUN .venv/bin/pip install --upgrade pip && .venv/bin/pip install pwntools
 RUN .venv/bin/pip install --upgrade pip && .venv/bin/pip install ptrlib
 # RUN bash -c "$(wget https://gef.blah.cat/sh -O -)"
 RUN cd pwndbg/ && ./setup.sh
@@ -25,7 +27,7 @@ RUN cd pwndbg/ && ./setup.sh
 # RUN curl -L https://foundry.paradigm.xyz | bash && /home/user/.foundry/bin/foundryup
 
 USER root
-# RUN wget -q https://raw.githubusercontent.com/bata24/gef/dev/install.sh -O- | sh
+RUN wget -q https://raw.githubusercontent.com/bata24/gef/dev/install.sh -O- | sh
 RUN touch .sudo_as_admin_successful
 COPY .bashrc .
 COPY .gdbinit .

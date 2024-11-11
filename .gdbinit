@@ -1,4 +1,17 @@
-source /home/user/pwndbg/gdbinit.py
-# source ~/peda/peda.py
-# source .gef-7c170cf6be3d84b2672a22e43b9128a23fe53c3b.py
-alias -a pdf=pdisas
+define gef
+    source /root/.gdbinit-gef.py
+end
+
+define dbg
+    source ~/pwndbg/gdbinit.py
+end
+
+define pwngdb
+    source ~/peda/peda.py
+    source ~/Pwngdb/pwndbg/pwngdb.py
+    source ~/Pwngdb/angelheap/gdbinit.py
+    python import angelheap
+    python angelheap.init_angelheap()
+end
+
+dbg
