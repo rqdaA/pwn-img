@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 RUN apt update && apt upgrade -y && \
-    apt install -y git neovim python3 python3-pip python3-venv sudo curl wget unzip tmux make gcc netcat qemu-user qemu-system
+    apt install -y git neovim python3 python3-pip python3-venv sudo curl wget unzip tmux make gcc netcat-openbsd qemu-user qemu-system
 RUN id ubuntu && userdel ubuntu || true
 RUN groupadd user -g 1000 && useradd -m user -s /bin/bash -u 1000 -g 1000 -G sudo
 RUN echo user:pwn | chpasswd && \
