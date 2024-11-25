@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 RUN apt update && apt upgrade -y && \
     apt install -y git neovim python3 python3-pip python3-venv sudo curl wget unzip tmux make gcc netcat qemu-user qemu-system
