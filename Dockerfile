@@ -7,7 +7,7 @@ RUN groupadd user -g 1000 && useradd -m user -s /bin/bash -u 1000 -g 1000 -G sud
 RUN echo user:pwn | chpasswd && \
     echo "user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     echo FLAG{REDUCTED} | tee /flag | tee /flag.txt
-RUN wget -q https://raw.githubusercontent.com/bata24/gef/dev/install.sh -O- | sh
+RUN wget -q https://raw.githubusercontent.com/bata24/gef/dev/install.sh -O- | sed -e 's/pip3 install/pip3 install --break-system-packages/g' | sh
 
 USER user
 WORKDIR /home/user
