@@ -3,7 +3,7 @@ name: Publish pwn-img
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   REGISTRY: ghcr.io
