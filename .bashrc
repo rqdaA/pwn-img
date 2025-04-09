@@ -143,7 +143,7 @@ export LC_CTYPE=C.UTF-8
 alias ll="ls -lah --group-directories-first"
 alias r2="r2 -AA"
 
-if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if command -v tmux &>/dev/null && [ -z "$TMUX" ]; then
 	exec tmux
 elif [ "$(pwd)" == "$HOME" ]; then
 	cd ctf

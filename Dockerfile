@@ -30,3 +30,6 @@ COPY --chown=user .bashrc .
 COPY --chown=user .gdbinit .
 COPY --chown=user .tmux.conf .
 COPY --chown=user init.vim /home/user/.config/nvim/
+
+USER user
+CMD /bin/bash
